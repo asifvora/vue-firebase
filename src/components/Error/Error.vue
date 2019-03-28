@@ -1,0 +1,28 @@
+<template>
+  <div class="error-div">
+    <ul>
+      <li v-for="error in errorsType" :key="error">{{ error }}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Error",
+  props: ["errorsType"]
+};
+</script>
+
+<style scoped>
+.error-div {
+  width: 100%;
+}
+ul {
+  list-style: none;
+}
+ul > li {
+  float: left;
+  color: red;
+  font-size: 12px;
+}
+</style>
