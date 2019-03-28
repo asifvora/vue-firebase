@@ -39,10 +39,21 @@
             type="password"
             v-model="singUpForm.password"
             :class="{'is-danger': errors.has('singUp.password') }"
+            ref="password"
             name="password"
             placeholder="Password"
           >
           <Error v-bind:errorsType="errors.collect('singUp.password')"/>
+          <input
+            v-validate="{ required: true, min: 6, max:16 ,confirmed: singUpForm.password}"
+            type="password"
+            v-model="singUpForm.confirmPassword"
+            :class="{'is-danger': errors.has('singUp.confirmPassword') }"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            data-vv-as="password"
+          >
+          <Error v-bind:errorsType="errors.collect('singUp.confirmPassword')"/>
           <button type="submit" class="form-button">Sign Up</button>
         </form>
       </div>
@@ -120,7 +131,8 @@ export default {
       singUpForm: {
         name: null,
         email: null,
-        password: null
+        password: null,
+        confirmPassword: null
       },
       singInForm: {
         email: null,
@@ -143,7 +155,8 @@ export default {
     singIn(scope) {
       this.$validator.validateAll(scope).then(result => {
         if (result) {
-          this.userLogin(this.singInForm);
+          this.resetSingIpForm(scope);
+          // this.userLogin(this.singInForm);
         }
       });
     },
@@ -152,13 +165,14 @@ export default {
       this.singUpForm.name = null;
       this.singUpForm.email = null;
       this.singUpForm.password = null;
-      errors.clear(scope);
+      this.singUpForm.confirmPassword = null;
+      this.$validator.reset();
     },
 
     resetSingIpForm(scope) {
-      this.singInForm.name = null;
       this.singInForm.email = null;
-      errors.clear(scope);
+      this.singInForm.password = null;
+      this.$validator.reset();
     }
   },
 
