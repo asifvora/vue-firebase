@@ -2,15 +2,30 @@
   <header class="header">
     <h1 class="logo-text">Vue Firebase</h1>
     <div class="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
+      <router-link to="/" v-if="!isAuthenticated">Home</router-link>&nbsp;
+      <router-link to="/about" v-if="isAuthenticated">About</router-link>
+      <button class="logout-btn" v-if="isAuthenticated" @click="logout">Logout</button>
     </div>
   </header>
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from "vuex";
+
 export default {
-  name: "Header"
+  name: "Header",
+
+  methods: {
+    ...mapActions("Auth", ["userSignOut"]),
+
+    logout() {
+      this.userSignOut();
+    }
+  },
+
+  computed: {
+    ...mapState("Auth", ["isAuthenticated"])
+  }
 };
 </script>
 
@@ -42,6 +57,17 @@ export default {
   display: inline-block;
   float: right;
   padding: 10px;
+}
+.logout-btn {
+  border-radius: 20px;
+  border: 1px solid #ffffff;
+  background-color: #ff4b2b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 34px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 </style>
 

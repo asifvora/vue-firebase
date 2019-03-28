@@ -19,12 +19,9 @@ const util = {
      */
     get(key) {
         if (isAvailable) {
-            let data = localStorage.getItem(key)
-            if (key === 'token') {
-                return data;
-            } else {
-                return data ? JSON.parse(data) : null;
-            }
+            const data = localStorage.getItem(key);
+
+            return data ? data : null;
         }
 
         return null;
@@ -37,11 +34,7 @@ const util = {
      */
     set(key, value) {
         if (isAvailable) {
-            if (key === 'token') {
-                return localStorage.setItem(key, value);
-            } else {
-                return localStorage.setItem(key, JSON.stringify(value));
-            }
+            return localStorage.setItem(key, value);
         }
 
         return null;

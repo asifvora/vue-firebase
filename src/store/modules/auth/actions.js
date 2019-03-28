@@ -49,3 +49,28 @@ export const userLogin = ({ commit }, { email, password }) => {
             commit('setLoader', false);
         });
 }
+
+export const userSignOut = ({ commit }) => {
+    commit('setLoader', true);
+    firebase
+        .auth()
+        .signOut()
+        .then(() => {
+            LocalStorage.remove('user');
+            LocalStorage.remove('idToken');
+            LocalStorage.remove('refreshToken');
+            commit('setUser', null);
+            commit('setIsAuthenticated', false);
+            commit('setLoader', false);
+            router.push('/');
+        })
+        .catch(() => {
+            LocalStorage.remove('user');
+            LocalStorage.remove('idToken');
+            LocalStorage.remove('refreshToken');
+            commit('setUser', null);
+            commit('setIsAuthenticated', false);
+            commit('setLoader', false);
+            router.push('/');
+        });
+}
