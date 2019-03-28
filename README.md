@@ -43,6 +43,18 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+# Notes
+
+Change the environments variable based on your configuration in .env file root directory of your project.
+
+```sh
+VUE_APP_FIREBASE_API_KEY=your apiKey
+VUE_APP_FIREBASE_AUTH_DOMAIN=your authDomain
+VUE_APP_FIREBASE_DB_URL=your databaseURL
+VUE_APP_FIREBASE_PROJECT_ID=your projectId
+VUE_APP_FIREBASE_STORAGE_BUCKET=your storageBucket
+VUE_APP_FIREBASE_MESSAGING_SENDER_ID=your messagingSenderId
+```
 
 ## Questions?🤔 
   
