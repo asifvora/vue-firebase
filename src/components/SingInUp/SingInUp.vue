@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form @submit.prevent="singUp">
+        <form @submit.prevent="singUp('singUp')" data-vv-scope="singUp">
           <h1>Create Account</h1>
           <div class="social-container">
             <a href="#" class="social">
@@ -20,34 +20,34 @@
             type="text"
             v-model="singUpForm.name"
             v-validate="'required'"
-            :class="{'is-danger': errors.has('name') }"
+            :class="{'is-danger': errors.has('singUp.name') }"
             name="name"
             placeholder="Name"
           >
-          <Error v-bind:errorsType="errors.collect('name')"/>
+          <Error v-bind:errorsType="errors.collect('singUp.name')"/>
           <input
             v-model="singUpForm.email"
             v-validate="'required|email'"
-            :class="{'is-danger': errors.has('email') }"
+            :class="{'is-danger': errors.has('singUp.email') }"
             type="email"
             name="email"
             placeholder="Email"
           >
-          <Error v-bind:errorsType="errors.collect('email')"/>
+          <Error v-bind:errorsType="errors.collect('singUp.email')"/>
           <input
-            v-validate="{ required: true, min: 6 }"
+            v-validate="{ required: true, min: 6, max:16 }"
             type="password"
             v-model="singUpForm.password"
-            :class="{'is-danger': errors.has('password') }"
+            :class="{'is-danger': errors.has('singUp.password') }"
             name="password"
             placeholder="Password"
           >
-          <Error v-bind:errorsType="errors.collect('password')"/>
+          <Error v-bind:errorsType="errors.collect('singUp.password')"/>
           <button type="submit" class="form-button">Sign Up</button>
         </form>
       </div>
       <div class="form-container sign-in-container">
-        <form @submit.prevent="singIn">
+        <form @submit.prevent="singIn('singIn')" data-vv-scope="singIn">
           <h1>Sign in</h1>
           <div class="social-container">
             <a href="#" class="social">
@@ -61,8 +61,24 @@
             </a>
           </div>
           <span>or use your account</span>
-          <input type="email" placeholder="Email">
-          <input type="password" placeholder="Password">
+          <input
+            v-model="singInForm.email"
+            v-validate="'required|email'"
+            :class="{'is-danger': errors.has('singIn.email') }"
+            type="email"
+            name="email"
+            placeholder="Email"
+          >
+          <Error v-bind:errorsType="errors.collect('singIn.email')"/>
+          <input
+            v-validate="{ required: true }"
+            type="password"
+            v-model="singInForm.password"
+            :class="{'is-danger': errors.has('singIn.password') }"
+            name="password"
+            placeholder="Password"
+          >
+          <Error v-bind:errorsType="errors.collect('singIn.password')"/>
           <a href="#">Forgot your password?</a>
           <button type="submit">Sign In</button>
         </form>
@@ -82,17 +98,21 @@
         </div>
       </div>
     </div>
+    <FullPageLoader v-bind:isShow="isLoading"/>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from "vuex";
 import Error from "../Error/Error.vue";
+import FullPageLoader from "../FullPageLoader/FullPageLoader.vue";
 
 export default {
   name: "SingInUp",
 
   components: {
-    Error
+    Error,
+    FullPageLoader
   },
 
   data() {
@@ -109,42 +129,41 @@ export default {
     };
   },
 
-  // validations: {
-  //   form: {
-  //     title: { required }
-  //   }
-  // },
-
   methods: {
-    addTodo() {
-      // this.$v.form.$touch();
-      // if (this.$v.form.$error) return;
-      // const { title } = this.form;
-      // const newTodo = { title: title, completed: false };
-      // // Send up to parent
-      // this.$emit("add-todo", newTodo);
-    },
+    ...mapActions("Auth", ["userJoin", "userLogin"]),
 
-    singUp() {
-      this.$validator.validateAll().then(result => {
+    singUp(scope) {
+      this.$validator.validateAll(scope).then(result => {
         if (result) {
-          return;
+          this.userJoin(this.singUpForm);
         }
       });
     },
 
-    singIn() {},
+    singIn(scope) {
+      this.$validator.validateAll(scope).then(result => {
+        if (result) {
+          this.userLogin(this.singInForm);
+        }
+      });
+    },
 
-    resetSingUpForm() {
+    resetSingUpForm(scope) {
       this.singUpForm.name = null;
       this.singUpForm.email = null;
       this.singUpForm.password = null;
+      errors.clear(scope);
     },
 
-    resetSingIpForm() {
-      // this.form.title = null;
-      // this.$v.form.$reset();
+    resetSingIpForm(scope) {
+      this.singInForm.name = null;
+      this.singInForm.email = null;
+      errors.clear(scope);
     }
+  },
+
+  computed: {
+    ...mapState("Auth", ["isLoading"])
   }
 };
 </script>
