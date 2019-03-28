@@ -156,7 +156,7 @@ export default {
       this.$validator.validateAll(scope).then(result => {
         if (result) {
           this.resetSingIpForm(scope);
-          // this.userLogin(this.singInForm);
+          this.userLogin(this.singInForm);
         }
       });
     },
