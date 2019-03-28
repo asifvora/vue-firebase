@@ -6,7 +6,7 @@ import { isAuthenticated } from '@/utils/Auth';
 Vue.use(Router)
 
 const router = new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         {
             path: '/',
