@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import router from '@/router';
 import LocalStorage from '@/utils/LocalStorage';
+import { successToaster } from '@/utils/Toaster';
 
 export const userJoin = ({ commit }, { email, password }) => {
     commit('setLoader', true);
@@ -15,6 +16,7 @@ export const userJoin = ({ commit }, { email, password }) => {
             commit('setIsAuthenticated', true);
             commit('setLoader', false);
             commit('setSingUpError', null);
+            successToaster('SingUp successfully.');
             router.push('/about');
         })
         .catch(error => {
@@ -40,6 +42,7 @@ export const userLogin = ({ commit }, { email, password }) => {
             commit('setIsAuthenticated', true);
             commit('setLoader', false);
             commit('setSingInError', null);
+            successToaster('SingIn successfully.');
             router.push('/about');
         })
         .catch(error => {
@@ -64,6 +67,7 @@ export const userSignOut = ({ commit }) => {
             commit('setUser', null);
             commit('setIsAuthenticated', false);
             commit('setLoader', false);
+            successToaster('SignOut successfully.');
             router.push('/');
         })
         .catch(() => {
@@ -71,6 +75,7 @@ export const userSignOut = ({ commit }) => {
             commit('setUser', null);
             commit('setIsAuthenticated', false);
             commit('setLoader', false);
+            successToaster('SignOut successfully.');
             router.push('/');
         });
 }

@@ -3,6 +3,7 @@
     <Header/>
     <router-view/>
     <Footer/>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 
@@ -20,6 +21,18 @@ export default {
 </script>
 
 <style>
+/*
+.material {
+  @import "../node_modules/vue-snotify/styles/material.css";
+}
+.simple {
+  @import "../node_modules/vue-snotify/styles/simple.css";
+}
+.dark {
+  @import "../node_modules/vue-snotify/styles/dark.css";
+} 
+*/
+
 * {
   box-sizing: border-box;
   margin: 0;
