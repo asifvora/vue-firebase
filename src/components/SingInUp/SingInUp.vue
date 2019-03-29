@@ -213,7 +213,7 @@ export default {
   overflow: hidden;
   width: 768px;
   max-width: 100%;
-  min-height: 480px;
+  min-height: 500px;
 }
 .is-danger {
   border-color: #f22435 !important;
