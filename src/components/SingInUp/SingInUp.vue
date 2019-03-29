@@ -16,6 +16,7 @@
             </a>
           </div>
           <span>or use your email for registration</span>
+          <Error v-if="!isLoading && singUpError" v-bind:errorsType="[singUpError]"/>
           <input
             type="text"
             v-model="singUpForm.name"
@@ -72,6 +73,7 @@
             </a>
           </div>
           <span>or use your account</span>
+          <Error v-if="!isLoading && singInError" v-bind:errorsType="[singInError]"/>
           <input
             v-model="singInForm.email"
             v-validate="'required|email'"
@@ -176,7 +178,7 @@ export default {
   },
 
   computed: {
-    ...mapState("Auth", ["isLoading"])
+    ...mapState("Auth", ["isLoading", "singInError", "singUpError"])
   },
 
   mounted() {

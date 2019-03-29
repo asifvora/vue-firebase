@@ -14,15 +14,16 @@ export const userJoin = ({ commit }, { email, password }) => {
             commit('setUser', user);
             commit('setIsAuthenticated', true);
             commit('setLoader', false);
+            commit('setSingUpError', null);
             router.push('/about');
         })
-        .catch(() => {
-            LocalStorage.remove('user');
-            LocalStorage.remove('idToken');
-            LocalStorage.remove('refreshToken');
+        .catch(error => {
+            const errMessage = error.message ? error.message : 'Error in singUp. Please try again.';
+            LocalStorage.clear();
             commit('setUser', null);
             commit('setIsAuthenticated', false);
             commit('setLoader', false);
+            commit('setSingUpError', errMessage);
         });
 }
 
@@ -38,15 +39,16 @@ export const userLogin = ({ commit }, { email, password }) => {
             commit('setUser', user);
             commit('setIsAuthenticated', true);
             commit('setLoader', false);
+            commit('setSingInError', null);
             router.push('/about');
         })
-        .catch(() => {
-            LocalStorage.remove('user');
-            LocalStorage.remove('idToken');
-            LocalStorage.remove('refreshToken');
+        .catch(error => {
+            const errMessage = error.message ? error.message : 'Invalid email or password. Please enter correct information.';
+            LocalStorage.clear();
             commit('setUser', null);
             commit('setIsAuthenticated', false);
             commit('setLoader', false);
+            commit('setSingInError', errMessage);
         });
 }
 
@@ -65,9 +67,7 @@ export const userSignOut = ({ commit }) => {
             router.push('/');
         })
         .catch(() => {
-            LocalStorage.remove('user');
-            LocalStorage.remove('idToken');
-            LocalStorage.remove('refreshToken');
+            LocalStorage.clear();
             commit('setUser', null);
             commit('setIsAuthenticated', false);
             commit('setLoader', false);

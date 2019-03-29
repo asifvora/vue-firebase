@@ -3,5 +3,9 @@ export default {
 
     setUser: (state, payload) => state.user = payload,
 
-    setIsAuthenticated: (state, payload) => state.isAuthenticated = payload
+    setIsAuthenticated: (state, payload) => state.isAuthenticated = payload,
+
+    setSingInError: (state, payload) => state.singInError = payload,
+
+    setSingUpError: (state, payload) => state.singUpError = payload,
 }
