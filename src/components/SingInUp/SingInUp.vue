@@ -162,7 +162,7 @@ export default {
       });
     },
 
-    resetSingUpForm(scope) {
+    resetSingUpForm() {
       this.singUpForm.name = null;
       this.singUpForm.email = null;
       this.singUpForm.password = null;
@@ -170,7 +170,7 @@ export default {
       this.$validator.reset();
     },
 
-    resetSingIpForm(scope) {
+    resetSingIpForm() {
       this.singInForm.email = null;
       this.singInForm.password = null;
       this.$validator.reset();
