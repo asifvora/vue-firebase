@@ -10,4 +10,8 @@ const config = {
     messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID
 };
 
-firebase.initializeApp(config);
+const app = firebase.initializeApp(config);
+const db = app.database();
+const usersRef = db.ref('users');
+
+export default usersRef;
