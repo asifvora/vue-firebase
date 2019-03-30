@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 import AddRecipe from "./AddRecipe";
 import RecipeItem from "./RecipeItem";
 import FullPageLoader from "../FullPageLoader/FullPageLoader.vue";

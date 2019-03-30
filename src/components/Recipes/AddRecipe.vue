@@ -3,7 +3,7 @@
     <div class="modal-header">
       <h3>New Recipe</h3>
     </div>
-    <form @submit.prevent="saveRecipe">
+    <form @submit.prevent="saveRecipe" class="recipe-form">
       <div class="modal-body">
         <label class="form-label">
           Title
@@ -31,10 +31,19 @@
           ></textarea>
           <Error v-bind:errorsType="errors.collect('description')"/>
         </label>
-        <!-- <label class="form-label">
+        <br>
+        <label class="form-label">
           Image
-          <input type="file" class="form-control">
-        </label>-->
+          <input
+            type="text"
+            class="form-control"
+            v-model="form.image"
+            v-validate="{ required: true, max:200 }"
+            name="image"
+            placeholder="Image URL"
+          >
+          <Error v-bind:errorsType="errors.collect('image')"/>
+        </label>
       </div>
       <div class="modal-footer text-right">
         <button type="submit" class="modal-default-button">Save</button>
@@ -44,41 +53,50 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import Error from "../Error/Error.vue";
-import FullPageLoader from "../FullPageLoader/FullPageLoader.vue";
 
 export default {
   name: "AddRecipe",
 
   components: {
-    Error,
-    FullPageLoader
+    Error
   },
 
   data() {
     return {
       form: {
         title: null,
-        description: null
-        // image: null
+        description: null,
+        image: null
       }
     };
   },
 
   methods: {
+    ...mapActions("Recipes", ["addRecipe", "getRecipes"]),
+
     resetForm() {
       this.form.title = null;
       this.form.description = null;
+      this.form.image = null;
       this.$validator.reset();
     },
 
     saveRecipe() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.$emit("close");
+          this.addRecipe(this.form).then(() => {
+            this.getRecipes();
+            this.$emit("close");
+          });
         }
       });
     }
+  },
+
+  computed: {
+    ...mapState("Recipes", ["isLoading"])
   }
 };
 </script>
@@ -87,7 +105,7 @@ export default {
 .form {
   text-align: left;
 }
-form {
+.recipe-form {
   text-align: left;
   padding: 0px;
   align-items: inherit;

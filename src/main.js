@@ -6,7 +6,7 @@ import App from '@/App.vue';
 import router from '@/router/index';
 import store from '@/store';
 import '@/config/firebase';
-
+import '@/pipes/Filter';
 import "../node_modules/vue-snotify/styles/material.css";
 
 const options = {

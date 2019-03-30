@@ -21,7 +21,7 @@ const util = {
         if (isAvailable) {
             const data = localStorage.getItem(key);
 
-            return data ? data : null;
+            return data ? JSON.parse(data) : null;
         }
 
         return null;
@@ -34,7 +34,7 @@ const util = {
      */
     set(key, value) {
         if (isAvailable) {
-            return localStorage.setItem(key, value);
+            return localStorage.setItem(key, JSON.stringify(value));
         }
 
         return null;

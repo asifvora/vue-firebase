@@ -1,8 +1,8 @@
 import LocalStorage from '@/utils/LocalStorage';
 import store from '@/store';
 
-const getAccessToken = () => LocalStorage.get('idToken');
-const getUser = () => LocalStorage.get('idToken');
+const getAccessToken = () => LocalStorage.get('refreshToken');
+const getUser = () => LocalStorage.get('user');
 
 export const isAuthenticated = () => {
     const token = getAccessToken();

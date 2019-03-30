@@ -8,12 +8,20 @@
     </div>
     <div class="card-details">
       <h3 class="headline">{{recipe.title}}</h3>
-      <div class="text">{{recipe.description}}</div>
+      <div class="text">{{recipe.description | readMore(100, '...')}}</div>
+      <div class="action">
+        <span class="action-btn" @click="deleteItem(recipe)">
+          Delete
+          <!-- <i class="fab fa-linkedin-in"></i> -->
+        </span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "RecipeItem",
 
@@ -22,12 +30,23 @@ export default {
       type: Object,
       required: true
     }
+  },
+
+  methods: {
+    ...mapActions("Recipes", ["getRecipes", "deleteRecipe"]),
+
+    deleteItem(recipe) {
+      this.deleteRecipe(recipe).then(() => {
+        this.getRecipes();
+      });
+    }
   }
 };
 </script>
 
 <style scoped>
 .theme-light {
+  width: 100%;
   height: 500px;
   background-color: #fff;
   color: rgba(0, 0, 0, 0.87);
@@ -70,5 +89,14 @@ export default {
 .text {
   line-height: 1.5;
   text-align: left;
+}
+.action {
+  justify-content: space-between;
+  flex-direction: column;
+  display: flex;
+}
+.action-btn {
+  justify-content: flex-end;
+  display: flex;
 }
 </style>

@@ -16,10 +16,10 @@ export const userJoin = ({ commit }, { name, email, password }) => {
                 name: name,
                 email: email
             }).then(() => {
-                LocalStorage.set('user', user);
-                LocalStorage.set('idToken', user['idToken']);
-                LocalStorage.set('refreshToken', user['refreshToken']);
-                commit('setUser', user);
+                LocalStorage.set('user', user.user);
+                LocalStorage.set('idToken', user.user['idToken']);
+                LocalStorage.set('refreshToken', user.user['refreshToken']);
+                commit('setUser', user.user);
                 commit('setIsAuthenticated', true);
                 commit('setLoader', false);
                 commit('setSingUpError', null);
@@ -45,10 +45,12 @@ export const userLogin = ({ commit }, { email, password }) => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(user => {
-            LocalStorage.set('user', user);
-            LocalStorage.set('idToken', user['idToken']);
-            LocalStorage.set('refreshToken', user['refreshToken']);
-            commit('setUser', user);
+            console.log('user',user.user);
+            
+            LocalStorage.set('user', user.user);
+            LocalStorage.set('idToken', user.user['idToken']);
+            LocalStorage.set('refreshToken', user.user['refreshToken']);
+            commit('setUser', user.user);
             commit('setIsAuthenticated', true);
             commit('setLoader', false);
             commit('setSingInError', null);
