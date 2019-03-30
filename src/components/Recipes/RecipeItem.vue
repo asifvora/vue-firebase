@@ -9,12 +9,12 @@
     <div class="card-details">
       <h3 class="headline">{{recipe.title}}</h3>
       <div class="text">{{recipe.description | readMore(100, '...')}}</div>
-      <div class="action">
-        <span class="action-btn" @click="deleteItem(recipe)">
-          Delete
-          <!-- <i class="fab fa-linkedin-in"></i> -->
-        </span>
-      </div>
+    </div>
+    <div class="action">
+      <span @click="deleteItem(recipe)" title="Delete">
+        Delete
+        <!-- <i class="fab fa-linkedin-in"></i> -->
+      </span>
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
   position: relative;
 }
 .card-details {
-  height: 150px;
+  height: 115px;
   padding: 16px;
   width: 100%;
 }
@@ -91,12 +91,8 @@ export default {
   text-align: left;
 }
 .action {
-  justify-content: space-between;
-  flex-direction: column;
-  display: flex;
-}
-.action-btn {
-  justify-content: flex-end;
-  display: flex;
+  height: 35px;
+  padding-right: 16px;
+  float: right;
 }
 </style>
