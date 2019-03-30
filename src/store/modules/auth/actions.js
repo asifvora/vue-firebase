@@ -2,22 +2,32 @@ import firebase from 'firebase';
 import router from '@/router';
 import LocalStorage from '@/utils/LocalStorage';
 import { successToaster } from '@/utils/Toaster';
+import { usersCollection } from '@/config/firebase';
 
-export const userJoin = ({ commit }, { email, password }) => {
+export const userJoin = ({ commit }, { name, email, password }) => {
     commit('setLoader', true);
     firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(user => {
-            LocalStorage.set('user', user);
-            LocalStorage.set('idToken', user['idToken']);
-            LocalStorage.set('refreshToken', user['refreshToken']);
-            commit('setUser', user);
-            commit('setIsAuthenticated', true);
-            commit('setLoader', false);
-            commit('setSingUpError', null);
-            successToaster('SingUp successfully.');
-            router.push('/about');
+            // create user obj
+            usersCollection.doc(user.user.uid).set({
+                id: user.user.uid,
+                name: name,
+                email: email
+            }).then(() => {
+                LocalStorage.set('user', user);
+                LocalStorage.set('idToken', user['idToken']);
+                LocalStorage.set('refreshToken', user['refreshToken']);
+                commit('setUser', user);
+                commit('setIsAuthenticated', true);
+                commit('setLoader', false);
+                commit('setSingUpError', null);
+                successToaster('SingUp successfully.');
+                router.push('/about');
+            }).catch(err => {
+                console.log(err)
+            });
         })
         .catch(error => {
             const errMessage = error.message ? error.message : 'Error in singUp. Please try again.';

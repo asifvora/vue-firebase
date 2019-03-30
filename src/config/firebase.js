@@ -10,8 +10,15 @@ const config = {
     messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID
 };
 
-const app = firebase.initializeApp(config);
-const db = app.database();
-const usersRef = db.ref('users');
+firebase.initializeApp(config);
 
-export default usersRef;
+// firebase utils
+const db = firebase.firestore();
+const auth = firebase.auth();
+const currentUser = auth.currentUser;
+
+// firebase collections
+const usersCollection = db.collection("users");
+const mealsCollection = db.collection("meals");
+
+export { db, auth, currentUser, usersCollection, mealsCollection };

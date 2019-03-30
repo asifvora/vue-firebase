@@ -2,7 +2,7 @@
   <header class="header">
     <h1 class="logo-text">Vue Firebase</h1>
     <div class="nav">
-      <router-link to="/about" v-if="isAuthenticated">About</router-link>
+      <!-- <router-link to="/about" v-if="isAuthenticated">About</router-link> -->
       <button class="logout-btn" v-if="isAuthenticated" @click="logout">Logout</button>
     </div>
   </header>
