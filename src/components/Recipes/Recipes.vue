@@ -11,13 +11,14 @@
     </div>
     <FullPageLoader v-bind:isShow="isLoading"/>
     <modal :show="showModal" @close="close">
-      <h3>New Recipe</h3>
+      <AddRecipe @close="close" ref="form"/>
     </modal>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
+import AddRecipe from "./AddRecipe";
 import RecipeItem from "./RecipeItem";
 import FullPageLoader from "../FullPageLoader/FullPageLoader.vue";
 import Modal from "../Modal/Modal.vue";
@@ -25,7 +26,7 @@ import Modal from "../Modal/Modal.vue";
 export default {
   name: "Recipes",
 
-  components: { RecipeItem, FullPageLoader, Modal },
+  components: { RecipeItem, FullPageLoader, Modal, AddRecipe },
 
   data() {
     return {
@@ -38,6 +39,7 @@ export default {
 
     close() {
       this.showModal = false;
+      this.$refs.form.resetForm();
     }
   },
 
@@ -53,7 +55,18 @@ export default {
 
 <style scoped>
 .heading {
+  width: 100%;
+  display: inline-block;
   padding: 10px;
+}
+
+.heading > h1 {
+  display: inline-block;
+  float: left;
+}
+.heading > button {
+  display: inline-block;
+  float: right;
 }
 .layout {
   width: 100%;
