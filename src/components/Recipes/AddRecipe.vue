@@ -68,7 +68,7 @@ export default {
       form: {
         title: null,
         description: null,
-        image: null
+        image: "https://meal-prep-9b30a.firebaseapp.com/images/keto.jpeg"
       }
     };
   },
@@ -79,7 +79,8 @@ export default {
     resetForm() {
       this.form.title = null;
       this.form.description = null;
-      this.form.image = null;
+      this.form.image =
+        "https://meal-prep-9b30a.firebaseapp.com/images/keto.jpeg";
       this.$validator.reset();
     },
 

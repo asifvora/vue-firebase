@@ -17,6 +17,9 @@ export default {
 
 <style scoped>
 .footer {
+  /* position: absolute; */
+  bottom: 0;
+  width: 100%;
   background: #ff416c;
   background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
   background: linear-gradient(to right, #ff4b2b, #ff416c);

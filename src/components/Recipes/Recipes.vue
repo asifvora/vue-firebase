@@ -9,6 +9,7 @@
         <RecipeItem v-bind:recipe="recipe"/>
       </div>
     </div>
+    <div v-if="!isLoading && recipes.length === 0" class="not-found">Not yet any meals.</div>
     <FullPageLoader v-bind:isShow="isLoading"/>
     <modal :show="showModal" @close="close">
       <AddRecipe @close="close" ref="form"/>
